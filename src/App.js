@@ -2,6 +2,7 @@ import './App.css';
 import {useDispatch, useSelector} from "react-redux";
 import {useState} from "react";
 import {ADD_CUSTOMER, addCustomerAction, REMOVE_CUSTOMER, removeCustomerAction} from "./store/customerReducer";
+import {addCashAction, getCashAction} from "./store/cashReducer";
 
 function App() {
     const dispatch = useDispatch();
@@ -23,8 +24,8 @@ function App() {
             <h1>REACT REDUX COURSE</h1>
             <h2>Cash: {cash}</h2>
 
-            <button onClick={() => dispatch({type: 'ADD_CASH', payload: 1})}>Пополнить баланс</button>
-            <button onClick={() => dispatch({type: 'GET_CASH', payload: 1})}>Снять наличные</button>
+            <button onClick={() => dispatch(addCashAction(5))}>Пополнить баланс</button>
+            <button onClick={() => dispatch(getCashAction(5))}>Снять наличные</button>
 
             <input type="text" value={customer} onChange={(e) => setCustomer(e.target.value)}/>
 
