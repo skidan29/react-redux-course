@@ -1,8 +1,12 @@
 import './App.css';
 import {useDispatch, useSelector} from "react-redux";
-import {useState} from "react";
-import {ADD_CUSTOMER, addCustomerAction, REMOVE_CUSTOMER, removeCustomerAction} from "./store/customerReducer";
+import {useEffect, useState} from "react";
+import {
+    addCustomerAction,
+    removeCustomerAction
+} from "./store/customerReducer";
 import {addCashAction, getCashAction} from "./store/cashReducer";
+import {fetchCustomers} from "./store/asyncActions";
 
 function App() {
     const dispatch = useDispatch();
@@ -10,6 +14,11 @@ function App() {
     const customers = useSelector(state => state.customers.customers);
 
     const [customer, setCustomer] = useState('');
+
+    useEffect(() => {
+       dispatch(fetchCustomers());
+    }, []);
+
 
     const addCustomer = () => {
         dispatch(addCustomerAction({name: customer, id: Date.now()}));
@@ -34,7 +43,8 @@ function App() {
 
             {
                 customers.length ?
-                    customers.map((customer, customerIdx) => <div key={customerIdx}>{customer.name}
+                    customers.map((customer, customerIdx) => <div
+                        key={customerIdx}>{customer.id + ' : ' + customer.title}
                         <button onClick={() => removeCustomer(customer.id)}>delete
                         </button>
                     </div>) :
